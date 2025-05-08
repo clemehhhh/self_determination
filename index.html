@@ -2,41 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>I Am Result</title>
+  <title>I Am</title>
   <style>
-    /* Style for the entire page */
     body {
       margin: 0;
       padding: 0;
       font-family: Helvetica, sans-serif;
-      text-align: center;
-      background-color: black;  /* fallback background */
-    }
-
-    /* Container to hold the background image */
-    #resultContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('background.jpg'); /* Replace with your image file */
-      background-size: cover;
-      background-position: center;
+      background-color: black;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
-    /* The text box container (for the input field) */
     #inputContainer {
       text-align: center;
-      background: rgba(0, 0, 0, 0.7); /* semi-transparent background */
+      background: rgba(0, 0, 0, 0.7);
       padding: 20px;
       border-radius: 12px;
     }
 
-    /* Styling for the input field */
     input {
       padding: 10px;
       font-size: 18px;
@@ -44,9 +29,9 @@
       border-radius: 5px;
       border: none;
       outline: none;
+      margin-bottom: 10px;
     }
 
-    /* Styling for the button */
     button {
       padding: 10px 20px;
       font-size: 18px;
@@ -63,42 +48,21 @@
   </style>
 </head>
 <body>
-  <div id="resultContainer">
-    <div id="inputContainer">
-      <input id="userInput" type="text" placeholder="I am..." />
-      <button onclick="submitResponse()">Enter</button>
-    </div>
+  <div id="inputContainer">
+    <input id="iamInput" type="text" placeholder="I am..." />
+    <br />
+    <button onclick="redirectToResult()">Enter</button>
   </div>
 
   <script>
-    // Get the user input from the URL parameter
-    const params = new URLSearchParams(window.location.search);
-    const userText = params.get("iam");
-
-    // Display the user input inside the text input field, if available
-    document.getElementById("userInput").value = userText || '';
-
-    // Function to submit the response and handle button click
-    function submitResponse() {
-      let text = document.getElementById("userInput").value;
-      alert("You wrote: " + text);  // Handle the submission as needed (for now, it will alert)
+    function redirectToResult() {
+      const userText = document.getElementById("iamInput").value.trim();
+      if (userText) {
+        window.location.href = `result.html?iam=${encodeURIComponent(userText)}`;
+      } else {
+        alert("Please enter something.");
+      }
     }
-
-</script>
   </script>
 </body>
 </html>
-
-<input id="iamInput" type="text" placeholder="I am..." />
-<button onclick="redirectToResult()">Enter</button>
-
-<script>
-  function redirectToResult() {
-    const userText = document.getElementById("iamInput").value.trim();
-    if (userText) {
-      window.location.href = `result.html?iam=${encodeURIComponent(userText)}`;
-    } else {
-      alert("Please enter something.");
-    }
-  }
-</script>
