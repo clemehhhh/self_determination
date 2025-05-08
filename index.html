@@ -2,37 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>I Am</title>
+  <title>I AM</title>
   <style>
     body {
       margin: 0;
       padding: 0;
+      background: black;
       font-family: Helvetica, sans-serif;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
-    #inputContainer {
+    #defaultCanvas0 {
+      display: block;
+    }
+
+    #inputSection {
+      position: absolute;
+      top: 545px; /* Adjusted to visually center with the "I AM :" rectangle */
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 12px;
     }
 
-    input {
+    #iamInput {
       padding: 10px;
       font-size: 18px;
       width: 300px;
       border-radius: 5px;
       border: none;
       outline: none;
-      margin-bottom: 10px;
     }
 
-    button {
+    #enterButton {
+      margin-left: 10px;
       padding: 10px 20px;
       font-size: 18px;
       background-color: #3498db;
@@ -42,26 +43,71 @@
       cursor: pointer;
     }
 
-    button:hover {
+    #enterButton:hover {
       background-color: #2980b9;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
 </head>
 <body>
-  <div id="inputContainer">
+  <div id="inputSection">
     <input id="iamInput" type="text" placeholder="I am..." />
-    <br />
-    <button onclick="redirectToResult()">Enter</button>
+    <button id="enterButton" onclick="redirectToResult()">Enter</button>
   </div>
 
   <script>
     function redirectToResult() {
-      const userText = document.getElementById("iamInput").value.trim();
-      if (userText) {
-        window.location.href = `result.html?iam=${encodeURIComponent(userText)}`;
+      const input = document.getElementById("iamInput").value.trim();
+      if (input) {
+        window.location.href = `result.html?iam=${encodeURIComponent(input)}`;
       } else {
         alert("Please enter something.");
       }
+    }
+
+    function setup() {
+      createCanvas(1024, 768);
+      frameRate(3);
+      textFont('Helvetica');
+      textAlign(CENTER, CENTER);
+      textWrap(WORD);
+    }
+
+    function draw() {
+      background(0);
+
+      drawBoxWithText(50, 50, 920, 150, "THE SELF DETERMINATION CHAMBER", 32);
+      drawBoxWithText(50, 250, 920, 100,
+        "YOU ARE ENTERING A SPACE FREE OF CONSTRAINTS FOR MARGINALISED PEOPLE - BIPOC, DISABLED, DIVERSIFIED, GENDER DIVERSE, MINORITIES, QUEER, WOMEN.",
+        16);
+      drawBoxWithText(50, 370, 920, 100,
+        "LEAVE YOUR BIASES BEHIND AND DISIDENTIFY YOURSELF.",
+        18);
+      drawBoxWithText(50, 490, 920, 50, "I AM :", 24);
+      drawBoxWithText(50, 610, 920, 50, "Press enter to discover yourself", 16);
+      drawBoxWithText(50, 680, 920, 50, "ENTER", 20);
+    }
+
+    function drawBoxWithText(x, y, w, h, message, fontSize) {
+      strokeWeight(12);
+      stroke(22, random(25), random(255));
+      fill(0);
+      rect(x, y, w, h);
+
+      noStroke();
+      fill(255);
+      textSize(fontSize);
+      textAlign(LEFT, TOP);
+      textWrap(WORD);
+
+      let lineHeight = fontSize * 1.2;
+      let words = message.split(' ');
+      let charsPerLine = Math.floor((w - 40) / (fontSize * 0.6));
+      let lineCount = Math.ceil(words.join(' ').length / charsPerLine);
+      let totalTextHeight = lineHeight * lineCount;
+      let textY = y + (h - totalTextHeight) / 2;
+
+      text(message, x + 20, textY, w - 40);
     }
   </script>
 </body>
