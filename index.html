@@ -83,6 +83,22 @@
       let text = document.getElementById("userInput").value;
       alert("You wrote: " + text);  // Handle the submission as needed (for now, it will alert)
     }
+
+</script>
   </script>
 </body>
 </html>
+
+<input id="iamInput" type="text" placeholder="I am..." />
+<button onclick="redirectToResult()">Enter</button>
+
+<script>
+  function redirectToResult() {
+    const userText = document.getElementById("iamInput").value.trim();
+    if (userText) {
+      window.location.href = `result.html?iam=${encodeURIComponent(userText)}`;
+    } else {
+      alert("Please enter something.");
+    }
+  }
+</script>
